@@ -38,13 +38,13 @@ namespace AssemblyDeconstanter
 				if (help)
 					ShowHelp(options);
 
-				if (input == "" && extra.Count >= 1)
+				if (input == "" && extra.Count() >= 1)
 					input = extra[0];
 
 				if (input == "")
 					throw new OptionException();
 
-				if (output == "" && extra.Count >= 2)
+				if (output == "" && extra.Count() >= 2)
 					output = extra[1];
 			}
 			catch (OptionException)
@@ -60,7 +60,7 @@ namespace AssemblyDeconstanter
 			AssemblyDefinition assembly = null;
 			string outputPath = string.Empty, outputName = string.Empty;
 
-			if (string.IsNullOrEmpty(output))
+			if (!string.IsNullOrEmpty(output))
 			{
 				try
 				{
@@ -95,7 +95,6 @@ namespace AssemblyDeconstanter
 
 			IEnumerable<TypeDefinition> allTypes = GetAllTypes(assembly.MainModule);
 			IEnumerable<FieldDefinition> allFields = allTypes.SelectMany(t => t.Fields) ?? Array.Empty<FieldDefinition>();
-			IEnumerable<PropertyDefinition> allProperties = allTypes.SelectMany(t => t.Properties) ?? Array.Empty<PropertyDefinition>();
 
 			int count = 0;
 			string reportString = "Changed {0} {1} to static.";
@@ -131,9 +130,8 @@ namespace AssemblyDeconstanter
 
 			try
 			{
-				if (string.IsNullOrEmpty(outputPath) && !Directory.Exists(outputPath))
+				if (!string.IsNullOrEmpty(outputPath) && !Directory.Exists(outputPath))
 					Directory.CreateDirectory(outputPath);
-
 				assembly.Write(outputFile);
 			}
 			catch (Exception)
