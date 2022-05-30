@@ -31,4 +31,4 @@ Options:
 |  -e, --exit                | Application should automatically exit             |
 |  -h, --help                | Show this message and exit                        |
   
-(inspired by AssemblyPublicezer)
+(inspired by [AssemblyPublicizer](https://github.com/CabbageCrow/AssemblyPublicizer))
